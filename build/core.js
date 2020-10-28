@@ -1,12 +1,17 @@
-const copyFonts = require('./shared/copy-fonts');
+const fs = require('fs-extra');
+const path = require('path');
 const copySCSS = require('./shared/copy-scss');
 const scss = require('./shared/scss');
 
-function build() {
+async function build() {
   // Copy fonts
-  copyFonts();
-  copySCSS();
-  scss();
+  await fs.copy(
+    path.resolve(__dirname, '../src/fonts'),
+    path.resolve(__dirname, `../package/fonts`),
+  );
+
+  await copySCSS();
+  await scss();
 }
 
 build();
